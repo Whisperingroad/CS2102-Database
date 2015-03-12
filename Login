@@ -1,11 +1,45 @@
 <html> 
 <body>
 
+<?php
+putenv('ORACLE_HOME=/oraclient');
+$dbh = ocilogon('a0101856','crse1420','(DESCRIPTION = 
+	(ADDRESS_LIST = 
+		(ADDRESS = (PROTOCOL = TCP)(HOST = sid3.comp.nus.edu.sg)(PORT = 1521))
+	)
+	(CONNECT_DATA = 
+		(SERVICE_NAME = sid3.comp.nus.edu.sg)
+	)
+	)');
+?>
+
 <form action="login.php" method="post">
 Username: <input type="text" name="username"><br>
 Password: <input type="text" name="password"><br>
-<input type="submit">
+<input type="submit" name = "formSubmit" value="Search">
 </form>
+
+<?php if(isset($_GET['formSubmit']))
+{
+	$sql = "SELECT username like '%".$_GET['username']."%' FROM REGISTERED_USERS";
+	echo "<b>SQL: </b>".$sql."<br><br>";	
+	$stid = oci_parse($dbh, $sql);
+	oci_execute($stid, OCI_DEFAULT);
+
+	
+
+	while($row = oci_fetch_array($stid)) {
+		echo "$row[0]"."<br>";
+	}
+
+	oci_free_statement($stid);
+}
+?>
+</td></tr>
+<?php
+oci_close($dbh);
+?>
+
 
 </body>
 </html>
