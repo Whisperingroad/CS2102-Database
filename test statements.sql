@@ -16,3 +16,5 @@ insert into post_writepost(post_title, post_content, post_username) values ('Int
 insert into post_writepost(post_title, post_content, post_username) values ('Introduction post','Hello, this is my first post in social networking site, thank you', 'sebbysebseb');
 select * from post_writepost;
 DROP table post_writepost;
+
+--test
