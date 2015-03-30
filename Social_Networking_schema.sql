@@ -13,6 +13,7 @@ post_content VARCHAR(4000) NOT NULL,
 post_time TIMESTAMP with local time zone DEFAULT CURRENT_TIMESTAMP,
 post_title VARCHAR(32) NOT NULL,
 post_username VARCHAR(32) REFERENCES REGISTERED_USER(USERNAME),
+pvotes INT,
 PRIMARY KEY (post_time, post_title, post_username)
 );
 
