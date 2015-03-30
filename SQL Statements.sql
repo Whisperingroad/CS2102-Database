@@ -2,9 +2,10 @@
 SELECT * FROM REGISTERED_USER where  username='$myusername' and userpassword='$mypassword'
 
 --homepage (display all the posts)
-  --what's new (sort by date)
-  SELECT * FROM 
-  --what's hot (sort by votes)
+  --what's new (sort by post_time)
+  SELECT post_title FROM post_writepost WHERE .... post_time...
+  --what's hot (sort by pvotes)
+  SELECT post_title FROM post_writepost WHERE .... pvotes...
 
 --test statements
 insert into Registered_User (email,userPassword,username) values('sebastian.wong@hotmail.com', 'password123', 'sebbysebseb');
