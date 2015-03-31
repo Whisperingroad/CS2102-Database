@@ -3,9 +3,9 @@ SELECT * FROM REGISTERED_USER where  username='$myusername' and userpassword='$m
 
 --homepage (display all the posts)
   --what's new (sort by post_time)
-  SELECT post_title FROM post_writepost WHERE .... post_time...
+  SELECT p.post_title FROM post_writepost p WHERE p.post_time >= ALL(SELECT p1.post_time FROM post_writepost p1)
   --what's hot (sort by pvotes)
-  SELECT post_title FROM post_writepost WHERE .... pvotes...
+  SELECT p.post_title FROM post_writepost p WHERE p.votes >= ALL(SELECT p1.votes FROM post_writepost p1)
 
 --test statements
 insert into Registered_User (email,userPassword,username) values('sebastian.wong@hotmail.com', 'password123', 'sebbysebseb');
