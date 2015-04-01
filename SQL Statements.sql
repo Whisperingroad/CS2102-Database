@@ -3,9 +3,12 @@ SELECT * FROM REGISTERED_USER where  username='$myusername' and userpassword='$m
 
 --homepage (display all the posts)
   --what's new (sort by post_time)
-  SELECT p.post_title FROM post_writepost p WHERE p.post_time >= ALL(SELECT p1.post_time FROM post_writepost p1)
+  SELECT p.post_title FROM post_writepost p ORDER BY post_time desc;
   --what's hot (sort by pvotes)
-  SELECT p.post_title FROM post_writepost p WHERE p.votes >= ALL(SELECT p1.votes FROM post_writepost p1)
+  SELECT p.post_title FROM post_writepost p ORDER BY p.pvotes desc;
+  
+--modify vote
+  UPDATE post_writepost SET pvotes = pvotes+1 WHERE post_title LIKE '%Intro%';
 
 --test statements
 insert into Registered_User (email,userPassword,username) values('sebastian.wong@hotmail.com', 'password123', 'sebbysebseb');
@@ -15,8 +18,6 @@ insert into Registered_User (email,userPassword,username) values('ronney@hotmail
 insert into Registered_User (email,userPassword,username) values('allen@hotmail.com', 'allen321', 'allen');
 select * from registered_user;
 drop table registered_user;
-
-
 
 --test statements
 --username should be automatically reflect user himself
