@@ -26,4 +26,13 @@ insert into post_writepost(post_title, post_content, post_username) values ('Int
 select * from post_writepost;
 DROP table post_writepost;
 
+--test statements
+--search posts of some username
+Select * from post_writepost where post_username= ‘Ronny’ order by post_time desc;
+
+--test statements
+--search posts of some title
+Select * from post_writepost where post_title like ‘%Chicken Rice%’  order by post_time desc;
+
+
 
