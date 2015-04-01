@@ -29,11 +29,11 @@ DROP table post_writepost;
 
 --test statements
 --search posts of some username
- Select * from post_writepost where post_username= ‘Ronny’ order by post_time desc;
+Select * from post_writepost where post_username = 'ronney91' order by post_time desc;
 
 --test statements
 --search posts of some title
- Select * from post_writepost where post_title like ‘%Chicken Rice%’  order by post_time desc;
+ Select * from post_writepost where post_title like '%Introduction%' order by post_time desc;
 
 
 
