@@ -1,0 +1,46 @@
+.table {
+	table-layout: fixed;
+	overflow: hidden;
+}
+
+.table td, .table th {
+	text-align: center;
+	height: 37px;
+}
+
+.today {
+	background-color: #9fc3d2;
+	font-weight: bold;
+}
+
+tr:hover > .today {
+	background-color: #95b9c7 !important;
+}
+
+.clickable:hover {
+	background-color: #6698ff;
+	text-decoration: underline;
+	cursor: hand;
+	cursor: pointer;
+}
+
+.popover-content {
+	font-weight: normal;
+}
+
+#this-month {
+	font-weight: bold;
+}
+
+.has-event {
+	background-color: #90ee90;
+	transition: all 0.5s;
+	-o-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+}
+
+tr:hover > .has-event {
+	background-color: #86d986 !important;
+}
+

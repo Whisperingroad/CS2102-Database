@@ -1,0 +1,11 @@
+/* For the top bar */ 
+.top-container {
+    /* height: 100px; */
+    position: relative;
+}
+
+.vertical-center {
+  height:100%;
+  width:100%;
+}
+
