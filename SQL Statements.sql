@@ -6,6 +6,10 @@ SELECT * FROM REGISTERED_USER where  username='$myusername' and userpassword='$m
   SELECT * FROM (SELECT p.post_title FROM post_writepost p ORDER BY post_time desc) WHERE ROWNUM <=5;
   --what's hot (sort by pvotes, ROWNUM <= 5 means display maximum of 5 titles)
   SELECT * FROM (SELECT p.post_title FROM post_writepost p ORDER BY p.pvotes desc) WHERE ROWNUM <=5;
+  --search posts of some username (TO CAPTURE USER's INPUT FROM TEXTFIELD)
+  Select * from post_writepost where post_username = 'TO BE CAPTURED' order by post_time desc;
+  --search posts of some title
+  Select * from post_writepost where post_title like '%Introduction%' order by post_time desc;
   
 --test statements
 insert into Registered_User (email,userPassword,username) values('sebastian.wong@hotmail.com', 'password123', 'sebbysebseb');
