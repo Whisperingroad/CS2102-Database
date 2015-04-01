@@ -3,9 +3,9 @@ SELECT * FROM REGISTERED_USER where  username='$myusername' and userpassword='$m
 
 --homepage (display all the posts)
   --what's new (sort by post_time)
-  SELECT p.post_title FROM post_writepost p ORDER BY post_time desc;
-  --what's hot (sort by pvotes)
-  SELECT p.post_title FROM post_writepost p ORDER BY p.pvotes desc;
+  SELECT * FROM (SELECT p.post_title FROM post_writepost p ORDER BY post_time desc) WHERE ROWNUM <=5;
+  --what's hot (sort by pvotes, ROWNUM <= 5 means display maximum of 5 titles)
+  SELECT * FROM (SELECT p.post_title FROM post_writepost p ORDER BY p.pvotes desc) WHERE ROWNUM <=5;
   
 --test statements
 insert into Registered_User (email,userPassword,username) values('sebastian.wong@hotmail.com', 'password123', 'sebbysebseb');
