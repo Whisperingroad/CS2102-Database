@@ -7,9 +7,6 @@ SELECT * FROM REGISTERED_USER where  username='$myusername' and userpassword='$m
   --what's hot (sort by pvotes)
   SELECT p.post_title FROM post_writepost p ORDER BY p.pvotes desc;
   
---modify vote
-  UPDATE post_writepost SET pvotes = pvotes+1 WHERE post_title LIKE '%Intro%';
-
 --test statements
 insert into Registered_User (email,userPassword,username) values('sebastian.wong@hotmail.com', 'password123', 'sebbysebseb');
 insert into Registered_User (email,userPassword,username) values('chewyxiu@hotmail.com', 'chewyxiu', 'chewyxiu');
@@ -35,6 +32,20 @@ Select * from post_writepost where post_username = 'ronney91' order by post_time
 --search posts of some title
  Select * from post_writepost where post_title like '%Introduction%' order by post_time desc;
 
+--test statements
+--sub query (NOT DONE)
+  insert into contains_comments(comment_username,post_username,post_title,post_time,comment_content)
+  values ('sebbysebseb','sebbysebseb','Introduction post','15/01/01 01:25:25','Your post is excellent')
 
+--test statements
+--hasVoted (NOT DONE)
+  insert into vote_post(hasVoted,voter_username,post_username,post_title) values ('Y','sebbysebseb','sebbysebseb','Introduction post')
 
+--test statements
+--voting comment
+  insert into vote_comment(hasVoted,voter_username,comment_username,post_title, post_content, post_username) 
+  values ('Y','sebbysebseb','sebbysebseb','Introduction post','Hello, this is my first post in social networking site, thank you','sebbysebseb');
 
+--test statements
+--vote comment (TESTED, ok)
+  UPDATE post_writepost SET pvotes = pvotes+1 WHERE post_title LIKE '%Intro%';
