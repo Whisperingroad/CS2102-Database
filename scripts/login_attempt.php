@@ -20,19 +20,6 @@ if($row <= 0){
   die("Wrong username and password entered!");  
 }
 
-/**
-// Fetch each row in an associative array
-print '<table border="1">';
-while ($row = oci_fetch_array($stid, OCI_RETURN_NULLS+OCI_ASSOC)) {
-   print '<tr>';
-   foreach ($row as $item) {
-       print '<td>'.($item !== null ? htmlentities($item, ENT_QUOTES) : '&nbsp').'</td>';
-   }
-   print '</tr>';
-}
-print '</table>';
-
-**/
 ?>
 
 <?php

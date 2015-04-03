@@ -1,0 +1,33 @@
+#header {
+    background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+.navbar {
+	height : 35px;
+	font-size: 16px;
+	border-radius: 8px;
+	background-color: #D8D8D8;
+}
+
+.navbar .navigation {
+	height : auto;
+	margin: 0px;
+	padding: 8px 0px;
+}
+
+.navigation li {
+	display: inline;
+	padding: 20px;
+}
+
+.navigation a {
+	color: white;
+	font-weight: bolder;
+
+}
+
+.navigation #logout{
+	float:right;
+}

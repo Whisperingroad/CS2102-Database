@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title> Social News Platform</title>
+</head>
+
+<link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
+
+<div id="header">
+<h1> Social News Platform </h1>
+</div>
+<body>
+
+	<div>
+	<form id='login' action='../scripts/login_attempt.php' method='post' accept-charset='UTF-8'>
+		<fieldset >
+		<legend>Login</legend>
+			<input type='hidden' name='submitted' id='submitted' value='1'/>
+ 			<label for='myusername' >UserName*:</label>
+			<input type='text' name='myusername' id='myusername'  maxlength="50" />
+ 			<label for='mypassword' >Password*:</label>
+			<input type='password' name='mypassword' id='mypassword' maxlength="50" />
+			<input type='submit' name='Submit' value='Submit' />
+ 		</fieldset>
+</form>
