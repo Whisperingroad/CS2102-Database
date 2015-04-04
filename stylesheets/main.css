@@ -31,3 +31,35 @@
 .navigation #logout{
 	float:right;
 }
+
+/*.HotPosts .HotPostsList{
+height: auto;
+margin: 0px;
+padding: 8px 0px;
+
+}*/
+.HotPosts li {
+	display: inline;
+	padding: 20px;
+
+} 
+.HotPosts .postvotes{
+	width: 50px;
+}
+
+.HotPosts .post_title{
+	width: 50px;
+}
+
+.HotPosts .post_content{
+	width: 100px;
+}
+
+.HotPosts .post_username{
+	width: 50px;
+}
+
+.HotPosts .post_time{
+	width: 50px;
+}
+
