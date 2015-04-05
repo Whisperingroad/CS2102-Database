@@ -35,13 +35,14 @@ require_once('../scripts/HotPosts.php');
 <div class = "HotPosts">
 <?php
     foreach($hotPosts as $hotPost){
-      echo "<ul class =>". "<HotPostsList>";  
-         echo "<li class =>". "<postvotes>". $hotPost['PVOTES']."</li>";
-         echo "<li class =>"."<post_title>". $hotPost['POST_TITLE']. "</li>";
-         echo "<li class =>". "<post_content>".$hotPost['POST_CONTENT']. "</li>";
-         echo "<li class =>". "<post_username>". $hotPost['POST_USERNAME']. "</li>";
-         echo "<li class =>". "<post_time>". $hotPost['POST_TIME']. "</li>";
+      echo "<ul class =". "HotPostsList>";  
+         echo "<li id =". "postvotes>". $hotPost['PVOTES']."</li>";
+         echo "<li id ="."post_title>". $hotPost['POST_TITLE']. "</li>";
+         echo "<li id =". "post_content>".$hotPost['POST_CONTENT']. "</li>";
+         echo "<li id =". "post_username>". $hotPost['POST_USERNAME']. "</li>";
+         echo "<li id =". "post_time>". $hotPost['POST_TIME']. "</li>";
        echo "</ul>";  
+
       }
        
 ?>

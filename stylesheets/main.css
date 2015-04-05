@@ -32,34 +32,48 @@
 	float:right;
 }
 
-/*.HotPosts .HotPostsList{
-height: auto;
-margin: 0px;
-padding: 8px 0px;
+.HotPosts ul{
+	/*border-radius: 8px;*/
+	list-style-type: none;
+	width: 100%;
+	border-style: solid;
+	border-width: 5px;	
+	padding: 0px;
+}
 
-}*/
+
 .HotPosts li {
-	display: inline;
-	padding: 20px;
 
 } 
-.HotPosts .postvotes{
-	width: 50px;
+.HotPosts #postvotes{
+	float:right;
+	
 }
 
-.HotPosts .post_title{
-	width: 50px;
+.HotPosts #post_title{
+	font-size: 200%;
+	/*text-decoration: underline;*/
+	border-bottom: 1px solid;
+	padding-left: 10px;
+	margin: 0px;
+
+}
+.HotPosts #post_content{
+	min-height: 70px;
+	/*border-style: solid;
+	border-width: 1px;*/
+	border-bottom: 1px solid;
+	padding-left:10px;
+	margin:0px;
 }
 
-.HotPosts .post_content{
-	width: 100px;
+.HotPosts #post_username{
+	padding-left:10px;
 }
 
-.HotPosts .post_username{
-	width: 50px;
-}
-
-.HotPosts .post_time{
-	width: 50px;
+.HotPosts #post_time{
+	color: grey ;
+	font-style: italic;
+	padding-left:10px;
 }
 
