@@ -1,10 +1,10 @@
 --drop table commands
 
-DROP table Registered_user;
-DROP table post_writepost;
-DROP table contains_comments;
-DROP table write_comments;
-DROP table vote_post;
-DROP table topic;
-DROP table classifiedBy,
-DROP table vote_comments;
+DROP TABLE VOTE_COMMENTS;
+DROP TABLE CLASSIFIEDBY;
+DROP TABLE TOPIC;
+DROP TABLE VOTE_POST;
+DROP TABLE WRITE_COMMENTS;
+DROP TABLE CONTAINS_COMMENTS;
+DROP TABLE POST_WRITEPOST;
+DROP TABLE REGISTERED_USER;
