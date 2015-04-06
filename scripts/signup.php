@@ -1,0 +1,118 @@
+<?php
+session_start();
+
+//include 'connection.php';
+
+require_once('connection.php');
+require_once('Input_sanitisation.php');
+
+
+if (!$dbh)  {
+    echo "An error occurred connecting to the database"; 
+    exit; 
+  }
+?>
+
+
+<!DOCTYPE HTML> 
+<html>
+<head>
+<style>
+.error {color: #FF0000;}
+</style>
+</head>
+<body> 
+
+<?php
+$emailErr = $usernameErr = $passwordErr = "";
+$email = $username = $password = "";
+
+$email=$_POST['email'];
+$username=$_POST['username'];
+$password=$_POST['password'];
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    
+    //check for empty fields
+    if(empty($email) || empty($username)|| empty($password)) {
+        if (empty($email)){
+	       $emailErr = "Email address is required!";
+        }
+        else{
+            $email = sanitiseInput($email);
+            // check if e-mail address is well-formed
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $emailErr = "Invalid email format!"; 
+            }
+            
+            $stid = oci_parse($dbh, "SELECT * FROM REGISTERED_USER where email='$email'");
+            oci_execute($stid);
+
+            $row=oci_fetch_array($stid, OCI_RETURN_NULLS+OCI_ASSOC);
+            if($row > 0){
+                $duplicatedEmailErr = "This email address is taken!";   
+            }
+            oci_free_statement($stid);
+        }
+                   
+        if (empty($username)){
+	       $usernameErr = "Username is required!";
+	   }
+        else{
+            $username = sanitiseInput($username);
+            $stid = oci_parse($dbh, "SELECT * FROM REGISTERED_USER where username='$username'");
+            oci_execute($stid);
+
+            $row=oci_fetch_array($stid, OCI_RETURN_NULLS+OCI_ASSOC);
+            if($row > 0){
+                $duplicatedUsernameErr = "This username is taken!";   
+            }
+            oci_free_statement($stid);
+        }
+    
+        if (empty($password)){
+	       $passwordErr = "Password is required!";
+	   }
+        else
+            $password = sanitiseInput($password);    
+            
+    }   
+     
+    else{           
+        
+        $sql = "INSERT INTO REGISTERED_USER(email, userPassword, username)VALUES('$email','$password', '$username')";
+        $stid = oci_parse($dbh, $sql);
+        oci_execute($stid);
+        $_SESSION['username'] = $username;
+        $_SESSION['password'] = $password;
+        $_SESSION['email'] = $email;
+
+       // header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/login_attempt.php");
+     
+        oci_free_statement($stid);
+        exit();
+     }
+}
+    
+?>
+    
+<h2>Registration</h2>
+<p><span class="error">* required field.</span></p>
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
+   Email Address: <input type="text" name="email" value="<?php echo $email;?>">
+   <span class="error">* <?php echo $emailErr;?><?php echo $duplicatedEmailErr;?></span>
+   <br><br>
+   Username: <input type="text" name="username" value="<?php echo $username;?>">
+   <span class="error">* <?php echo $usernameErr;?><?php echo $duplicatedUsernameErr;?></span>
+   <br><br>
+   Password: <input type="password" name="password" value="<?php echo $password;?>">
+   <span class="error">* <?php echo $passwordErr;?></span>
+   <br><br>
+   <input type="submit" name="submit" value="Submit"> 
+</form>
+
+
+    </body>
+</html>
+
