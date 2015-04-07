@@ -35,7 +35,9 @@ require_once('../scripts/HotPosts.php');
 
 <div class = "HotPosts">
 <?php
+       // assessing one result row at a time 
     foreach($hotPosts as $hotPost){
+      // displaying results from the hotPost array
       echo "<ul class =". "HotPostsList>";  
          echo "<li id =". "postvotes>". $hotPost['PVOTES']."</li>";
          echo "<li id ="."post_title>". $hotPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button></li>";
