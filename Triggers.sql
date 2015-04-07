@@ -1,3 +1,11 @@
+
+-- Trigger for change vote
+-- When a user votes or unvotes a post, the vote post table will be updated accordingly.
+-- This implies that posts in the post_writepost table needs to be updated as well.
+-- This BEFORE trigger is invoked right before an update of the vote_post table
+-- and updates the post_writepost table.
+-- BEFORE triggers modify the row before the row data is written to disk
+
 CREATE OR REPLACE TRIGGER CHANGE_VOTE
 BEFORE UPDATE
 ON vote_post
