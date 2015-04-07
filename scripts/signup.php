@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 
 //include 'connection.php';
@@ -53,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if($row > 0){
                 $duplicatedEmailErr = "This email address is taken!";   
             }
-            oci_free_statement($stid);
         }
                    
         if (empty($username)){
@@ -68,7 +68,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if($row > 0){
                 $duplicatedUsernameErr = "This username is taken!";   
             }
-            oci_free_statement($stid);
         }
     
         if (empty($password)){
@@ -79,19 +78,89 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
     }   
      
-    else{           
+    else{ 
         
-        $sql = "INSERT INTO REGISTERED_USER(email, userPassword, username)VALUES('$email','$password', '$username')";
-        $stid = oci_parse($dbh, $sql);
+    /**    try{
+            $sql = "INSERT INTO REGISTERED_USER(email, userPassword, username)VALUES('$email','$password', '$username')";
+            $stid = oci_parse($dbh, $sql);
+            $response = oci_execute($stid);
+            //echo $response;
+            if(!$response){
+                echo $response;
+                throw new Exception('please try again');
+            }
+            else{    
+                oci_execute($stid);
+                $_SESSION['username'] = $username;
+                $_SESSION['password'] = $password;
+                $_SESSION['email'] = $email;
+            }
+        }
+        
+        catch(Exception $e){
+            var_dump($response);
+            var_dump($e->getMessage());
+           // die('Stop');
+        } **/
+        
+        $valid_email = 0;
+        $valid_username = 0;
+        
+        $email = sanitiseInput($email);
+            // check if e-mail address is well-formed
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format!"; 
+        }
+            
+        $stid = oci_parse($dbh, "SELECT * FROM REGISTERED_USER where email='$email'");
         oci_execute($stid);
-        $_SESSION['username'] = $username;
-        $_SESSION['password'] = $password;
-        $_SESSION['email'] = $email;
 
-       // header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/login_attempt.php");
-     
+        $row=oci_fetch_array($stid, OCI_RETURN_NULLS+OCI_ASSOC);
+        if($row > 0){
+            $duplicatedEmailErr = "This email address is taken!";   
+        }
+        else{
+            $valid_email = 1;   
+        }
+        
+    
+        $username = sanitiseInput($username);
+        $stid = oci_parse($dbh, "SELECT * FROM REGISTERED_USER where username='$username'");
+        oci_execute($stid);
+
+        $row=oci_fetch_array($stid, OCI_RETURN_NULLS+OCI_ASSOC);
+        if($row > 0){
+            $duplicatedUsernameErr = "This username is taken!";   
+        }
+        else{
+            $valid_username = 1;    
+        }
+        
+    
+        $password = sanitiseInput($password); 
+        
+        if($valid_email ==1 && $valid_username == 1){
+            $sql = "INSERT INTO REGISTERED_USER(email, userPassword,    username)VALUES('$email','$password', '$username')";
+            $stid = oci_parse($dbh, $sql);
+            $response = oci_execute($stid); 
+             exit(header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php"));
+            //echo "ADDED!";
+          //  header("http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/login_sebastian.html");
+           // header("http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php");
+        //if(!$response){
+         //$e = oci_error($stid);
+           // echo htmlentities($e['message']);
+       // }
+        }
+        else{    
+            header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/signup.php");
+          //  header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/signup.php");
+        }
+        
         oci_free_statement($stid);
-        exit();
+        //exit(header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php"));
+        //exit();
+        ob_flush();
      }
 }
     
