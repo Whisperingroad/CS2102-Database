@@ -80,29 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      
     else{ 
         
-    /**    try{
-            $sql = "INSERT INTO REGISTERED_USER(email, userPassword, username)VALUES('$email','$password', '$username')";
-            $stid = oci_parse($dbh, $sql);
-            $response = oci_execute($stid);
-            //echo $response;
-            if(!$response){
-                echo $response;
-                throw new Exception('please try again');
-            }
-            else{    
-                oci_execute($stid);
-                $_SESSION['username'] = $username;
-                $_SESSION['password'] = $password;
-                $_SESSION['email'] = $email;
-            }
-        }
-        
-        catch(Exception $e){
-            var_dump($response);
-            var_dump($e->getMessage());
-           // die('Stop');
-        } **/
-        
         $valid_email = 0;
         $valid_username = 0;
         
@@ -144,28 +121,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stid = oci_parse($dbh, $sql);
             $response = oci_execute($stid); 
              exit(header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php"));
-            //echo "ADDED!";
-          //  header("http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/login_sebastian.html");
-           // header("http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php");
-        //if(!$response){
-         //$e = oci_error($stid);
-           // echo htmlentities($e['message']);
-       // }
         }
-        else{    
-            header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/signup.php");
-          //  header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/signup.php");
+        else{
+             //$_SESSION['message'] = "please try again!";
+            header("Refresh: 3; url=\" http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/signup.php");
+            //header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/signup.php");
+        
         }
         
         oci_free_statement($stid);
-        //exit(header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php"));
-        //exit();
         ob_flush();
      }
-}
-    
-?>
-    
+}  
+?> 
 <h2>Registration</h2>
 <p><span class="error">* required field.</span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
