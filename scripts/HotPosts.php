@@ -15,7 +15,7 @@ oci_execute($stid);
 //associative and numeric
 while (($row = oci_fetch_array($stid, OCI_DEFAULT)))
 {
-  $hotPosts[] = array('PVOTES' => $row['PVOTES'], 'POST_TITLE' => $row['POST_TITLE'], 'POST_CONTENT' => $row['POST_CONTENT'], 'POST_USERNAME' => $row['POST_USERNAME'], 'POST_TIME' => $row['POST_TIME']);
+  $hotPosts[] = array('PVOTES' => $row['PVOTES'], 'POST_TITLE' => $row['POST_TITLE'], 'POST_CONTENT' => $row['POST_CONTENT']->read(20), 'POST_USERNAME' => $row['POST_USERNAME'], 'POST_TIME' => $row['POST_TIME']);
  
 }
 
