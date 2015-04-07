@@ -25,9 +25,9 @@ require_once('../scripts/HotPosts.php');
       <ul class = "navigation">
           <li> <a href= "#HotPost"> Hot Posts </a> </li>
           <li> <a href= "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/NewPostsAccToTime.php"> New Posts </a> </li>
-          <li> <a href = "#Profile"> Profile </a> </li>
+          <li> <a href = "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/Profile.php"> Profile </a> </li>
           <li> <a href = "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/Post.php" > Create a new post! </a> </li>
-          <li> <a id= 'logout' href = "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/login_sebastian.html"> Log out  </a> </li> 
+          <li> <a id= 'logout' href = "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/login.html"> Log out  </a> </li> 
     
       </ul>
     </div>

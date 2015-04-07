@@ -147,16 +147,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h2>Register Account</h2>
 <p><span class="error">* required field.</span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
-   Email Address: <input type="text" name="email" value="<?php echo $email;?>">
-   <span class="error">* <?php echo $emailErr;?><?php echo $duplicatedEmailErr;?></span>
+    Email Address: <input type="text" name="email" value="<?php echo $email;?>">
+   <span class="error">*<?php echo $emailErr;?><?php echo $duplicatedEmailErr;?></span>
    <br><br>
-   Username: <input type="text" name="username" value="<?php echo $username;?>">
-   <span class="error">* <?php echo $usernameErr;?><?php echo $duplicatedUsernameErr;?></span>
+    Username: <input type="text" name="username" value="<?php echo $username;?>">
+   <span class="error">*<?php echo $usernameErr;?><?php echo $duplicatedUsernameErr;?></span>
    <br><br>
-   Password: <input type="password" name="password" value="<?php echo $password;?>">
-   <span class="error">* <?php echo $passwordErr;?></span>
+    Password: <input type="password" name="password" value="<?php echo $password;?>">
+   <span class="error">*<?php echo $passwordErr;?></span>
    <br><br>
-   <input type="submit" name="submit" value="Submit"> 
+    <input type="submit" name="submit" value="Submit">
 </form>
 </div>
 
