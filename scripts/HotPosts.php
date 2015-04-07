@@ -10,7 +10,7 @@ if (!$dbh)  {
 
 
 $hotPosts = array(); 
-$stid = oci_parse($dbh,"SELECT * FROM (SELECT pvotes, post_title, post_content, post_username, post_time from post_writepost  ORDER BY pvotes DESC) where rownum <= 5");
+$stid = oci_parse($dbh,"SELECT * FROM (SELECT pvotes, post_title, post_content, post_username, post_time from post_writepost  ORDER BY pvotes DESC) where rownum <= 20");
 oci_execute($stid);
 //associative and numeric
 while (($row = oci_fetch_array($stid, OCI_DEFAULT)))
