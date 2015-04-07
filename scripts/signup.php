@@ -142,9 +142,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }  
 ?> 
     	
- 
-<div style="text-align: center;">
-<h2>Register Account</h2>
+<!-- <div style="text-align: center;">-->
+<h1>Register Account</h1>
 <p><span class="error">* required field.</span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
     Email Address: <input type="text" name="email" value="<?php echo $email;?>">
@@ -158,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    <br><br>
     <input type="submit" name="submit" value="Submit">
 </form>
-</div>
+<!--</div> -->
 
 
     </body>

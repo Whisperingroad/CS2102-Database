@@ -38,7 +38,7 @@ require_once('../scripts/HotPosts.php');
     foreach($hotPosts as $hotPost){
       echo "<ul class =". "HotPostsList>";  
          echo "<li id =". "postvotes>". $hotPost['PVOTES']."</li>";
-         echo "<li id ="."post_title>". $hotPost['POST_TITLE']. "</li>";
+         echo "<li id ="."post_title>". $hotPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button></li>";
          echo "<li id =". "post_content>".$hotPost['POST_CONTENT']. "</li>";
          echo "<li id =". "post_username>". $hotPost['POST_USERNAME']. "</li>";
          echo "<li id =". "post_time>". $hotPost['POST_TIME']. "</li>";

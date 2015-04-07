@@ -76,4 +76,6 @@
 	font-style: italic;
 	padding-left:10px;
 }
-
+.HotPosts #button{
+	float:right;
+}
