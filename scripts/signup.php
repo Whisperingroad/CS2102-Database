@@ -17,11 +17,18 @@ if (!$dbh)  {
 
 <!DOCTYPE HTML> 
 <html>
+
 <head>
+    <title> Social News Platform</title>
 <style>
 .error {color: #FF0000;}
 </style>
 </head>
+    
+    <link type="text/css" rel="stylesheet" href="../stylesheets/main.css">
+    <div id="header">
+<h1> Social News Platform </h1>
+</div>
 <body> 
 
 <?php
@@ -134,7 +141,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      }
 }  
 ?> 
-<h2>Registration</h2>
+    	
+ 
+<div style="text-align: center;">
+<h2>Register Account</h2>
 <p><span class="error">* required field.</span></p>
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
    Email Address: <input type="text" name="email" value="<?php echo $email;?>">
@@ -148,6 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    <br><br>
    <input type="submit" name="submit" value="Submit"> 
 </form>
+</div>
 
 
     </body>
