@@ -1,7 +1,5 @@
 <?php
 session_start();
-//require_once('../scripts/connection.php');
-
 require_once('../scripts/HotPosts.php');
 ?>
 
