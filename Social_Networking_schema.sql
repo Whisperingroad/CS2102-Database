@@ -10,7 +10,6 @@ isAdmin CHAR(1) DEFAULT 'N' Check(isAdmin = 'Y' or isAdmin = 'N')
 CREATE TABLE post_writepost (
 post_content VARCHAR(4000) NOT NULL,
 post_time TIMESTAMP(0) with local time zone DEFAULT CURRENT_TIMESTAMP,
---post_topic VARCHAR(32)	NOT NULL,
 post_title VARCHAR(32) NOT NULL,
 post_username VARCHAR(32) REFERENCES REGISTERED_USER(USERNAME),
 pvotes INT default '0',
