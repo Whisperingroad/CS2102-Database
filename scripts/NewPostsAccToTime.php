@@ -40,7 +40,20 @@ require_once('../scripts/NewPosts.php');
     foreach($newPosts as $newPost){
       echo "<ul class =". "NewPostsList>";  
          echo "<li id =". "postvotes>". $newPost['PVOTES']."</li>";
-         echo "<li id ="."post_title>". $newPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button></li>";
+       // echo "<li id ="."post_title>". $newPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button></li>";
+        
+         if ( $_SESSION['myusername'] == $newPost['POST_USERNAME']){ 
+           echo "<li id ="."post_title>". $newPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button>
+           <button id = " . "button class=". "pure-button pure-button-active".">Edit</button> 
+           <button id = " . "button class=". "pure-button pure-button-active".">Delete</button></li>";
+        
+        }
+        else
+            echo "<li id ="."post_title>". $newPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button></li>";
+        
+        
+        
+    
          echo "<li id =". "post_content>".$newPost['POST_CONTENT']. "</li>";
          echo "<li id =". "post_username>". $newPost['POST_USERNAME']. "</li>";
          echo "<li id =". "post_time>". $newPost['POST_TIME']. "</li>";
