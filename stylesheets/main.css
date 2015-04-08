@@ -79,3 +79,52 @@
 .HotPosts #button{
 	float:right;
 }
+
+.NewPosts ul{
+	/*border-radius: 8px;*/
+	list-style-type: none;
+	width: 100%;
+	border-style: solid;
+	border-width: 5px;	
+	padding: 0px;
+}
+
+
+.NewPosts li {
+
+} 
+.NewPosts #postvotes{
+	float:right;
+	
+}
+
+.NewPosts #post_title{
+	font-size: 200%;
+	/*text-decoration: underline;*/
+	border-bottom: 1px solid;
+	padding-left: 10px;
+	margin: 0px;
+
+}
+.NewPosts #post_content{
+	min-height: 70px;
+	/*border-style: solid;
+	border-width: 1px;*/
+	border-bottom: 1px solid;
+	padding-left:10px;
+	margin:0px;
+}
+
+.NewPosts #post_username{
+	padding-left:10px;
+}
+
+.NewPosts #post_time{
+	color: grey ;
+	font-style: italic;
+	padding-left:10px;
+}
+.NewPosts #button{
+	float:right;
+}
+
