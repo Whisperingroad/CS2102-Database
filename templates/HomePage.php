@@ -40,7 +40,25 @@ require_once('../scripts/HotPosts.php');
       // displaying results from the hotPost array
       echo "<ul class =". "HotPostsList>";  
          echo "<li id =". "postvotes>". $hotPost['PVOTES']."</li>";
-         echo "<li id ="."post_title>". $hotPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button></li>";
+        // echo "<li id ="."post_title>". $hotPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button></li>";
+        
+        
+        //echo $_SESSION['myusername'];
+        //echo $hotPost['POST_USERNAME'];
+        
+       if ( $_SESSION['myusername'] == $hotPost['POST_USERNAME']){ 
+           echo "<li id ="."post_title>". $hotPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button>
+           <button id = " . "button class=". "pure-button pure-button-active".">Edit</button> 
+           <button id = " . "button class=". "pure-button pure-button-active".">Delete</button></li>";
+        
+        }
+        else
+             echo "<li id ="."post_title>". $hotPost['POST_TITLE']. "<button id = " . "button class=". "pure-button pure-button-active".">Vote</button></li>";
+           
+            
+        
+        
+        
          echo "<li id =". "post_content>".$hotPost['POST_CONTENT']. "</li>";
          echo "<li id =". "post_username>". $hotPost['POST_USERNAME']. "</li>";
          echo "<li id =". "post_time>". $hotPost['POST_TIME']. "</li>";
