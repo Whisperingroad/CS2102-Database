@@ -32,6 +32,7 @@ require_once('../scripts/HotPosts.php');
 
 
 <div class = "HotPosts">
+    <h1><font color= 'red'> What's Hot - 20 Top Posts! </font></h1>
 <?php
        // assessing one result row at a time 
     foreach($hotPosts as $hotPost){
