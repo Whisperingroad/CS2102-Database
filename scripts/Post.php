@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-include 'connection.php';
+require_once('connection.php');
+require_once('Input_sanitisation.php');
 if (!$dbh)  {
     echo "An error occurred connecting to the database"; 
     exit; 
@@ -15,6 +16,11 @@ $mytitle = $_POST['mytitle'];
 $mytopic = $_POST['mytopic'];
 $mytext = $_POST['message'];
 
+$mytitle = sanitiseInput($mytitle);
+$mytopic = sanitiseInput($mytopic);
+$mytext = sanitiseInput($mytext);
+
+
 if(empty($mytext) || empty($mytitle)) {
     if (empty($mytext)){
 	$messageErr = "* Post content is required";
@@ -25,12 +31,25 @@ if(empty($mytext) || empty($mytitle)) {
 	}
 }
 else{
-	$sql = "INSERT INTO POST_WRITEPOST(post_title, post_content, post_username) VALUES ('$mytitle','$mytext', '".$_SESSION['myusername']."')";
-	$stid = oci_parse($dbh, $sql);
+
+  if (empty($mytopic)){
+	$sql = "INSERT INTO POST_WRITEPOST(post_title, post_content, post_username) VALUES ('$mytitle','$mytext','".$_SESSION['myusername']."')";
+	}
+  else{
+  $sql = "INSERT INTO POST_WRITEPOST(post_title, post_content, post_topic, post_username) VALUES ('$mytitle','$mytext', '$mytopic','".$_SESSION['myusername']."')";
+  }
+
+  $stid = oci_parse($dbh, $sql);
         oci_execute($stid);
-        oci_free_statement($stid);
+        oci_free_statement($stid);          
         $_SESSION['post_title'] = $mytitle;
-        header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/NewPost.php");
+
+  /*$sql = "INSERT INTO TOPIC(topic_title) VALUES ('$mytopic')";
+  $stid = oci_parse($dbh, $sql);
+        oci_execute($stid);
+        oci_free_statement($stid);         
+  */
+        header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/NewPost.php");
         exit();
 }
 }
@@ -50,7 +69,7 @@ else{
     <div class = "navbar">
     <!-- ordered list within unordered list -->
       <ul class = "navigation">
-          <li> <a href= "#HotPost"> Hot Posts </a> </li>
+          <li> <a href= "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php"> Hot Posts </a> </li>
           <li> <a href= "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/NewPostsAccToTime.php"> New Posts </a> </li>
           <li> <a href = "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/Profile.php"> Profile </a> </li>
           <li> <a href = "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/Post.php" > Create a new post! </a> </li>
