@@ -15,48 +15,157 @@ if($_POST['UpVote'])
 	$postUsername = $_POST['post_username'];
 
 	//check if user has voted before
-	$sql = "SELECT hasVoted FROM VOTE_POST WHERE post_username = '$postUsername' AND post_time = '$postTime' AND post_title = '$postTitle'
+	$sql = "SELECT Voted FROM VOTE_POST WHERE post_username = '$postUsername' AND post_time = '$postTime' AND post_title = '$postTitle'
 		AND voter_username = '".$_SESSION['myusername']."'";
 	$stid = oci_parse($dbh, $sql);
-        oci_execute($stid);
-        $row = oci_fetch_array($stid,OCI_DEFAULT);
-        oci_free_statement($stid);
-        //user has not voted
+  oci_execute($stid);
+  $row = oci_fetch_array($stid,OCI_DEFAULT);
+  oci_free_statement($stid);
+        //Post has not been voted previously
         if ($row[0] == null){
+        	//Insert entry into Vote Post
+        	$sql = "INSERT INTO VOTE_POST(post_title, post_time, post_username, voter_username, Voted) VALUES ('$postTitle','$postTime', 
+        		'$postUsername','".$_SESSION['myusername']."', '1')";
+          //Update total number of votes that the Post has
+          $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES + 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+                  AND post_username = '$postUsername'";
+          //Update the reputation of the user who wrote the post        
+          $sql3= "UPDATE REGISTERED_USER SET REPUTATION = REPUTATION + 1 WHERE username = '$postUsername'";
+          }
 
+        //Post has been upvoted/downvoted and unvoted by user previously 
+        if($row[0] == 0){
+          //Update entry in Vote Post
+          $sql = "UPDATE VOTE_POST SET Voted = 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          //Update total number of votes that the Post has
+          $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES + 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+                  AND post_username = '$postUsername'";
+          //Update the reputation of the user who wrote the post        
+          $sql3= "UPDATE REGISTERED_USER SET REPUTATION = REPUTATION + 1 WHERE username = '$postUsername'";
+          }
 
-	//Update vote in vote post
-	$sql = "INSERT INTO VOTE_POST(post_title, post_time, post_username, voter_username, hasVoted) VALUES ('$postTitle','$postTime', 
-		'$postUsername','".$_SESSION['myusername']."', 'Y')";
-	$stid = oci_parse($dbh, $sql);
-        oci_execute($stid);
-        oci_free_statement($stid);
+        //Post was already upvoted by the user
+        //User is unvoting his upvote  
+        if($row[0] == 1){
+          //Update entry into Vote Post
+          $sql = "UPDATE VOTE_POST SET Voted = 0 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          //Update total number of votes that the Post has
+          $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES - 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+                  AND post_username = '$postUsername'";
+          //Update the reputation of the user who wrote the post
+          $sql3= "UPDATE REGISTERED_USER SET REPUTATION = REPUTATION - 1 WHERE username = '$postUsername'";                  
+        }
+        //Post was already downvoted by the user
+        //User is changing his downvote to an upvote
+        if($row[0] == -1){
+          //Update entry into Vote Post
+          $sql = "UPDATE VOTE_POST SET Voted = 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          //Update total number of votes that the Post has
+          $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES + 2 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+                  AND post_username = '$postUsername'";
+          //Update the reputation of the user who wrote the post
+          $sql3= "UPDATE REGISTERED_USER SET REPUTATION = REPUTATION + 2 WHERE username = '$postUsername'";                  
+        }    
 
-    //Update post's votes  
-   	$sql = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES + 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
-   			AND post_username = '$postUsername'" ;
-	$stid = oci_parse($dbh, $sql);
-        oci_execute($stid);
-        oci_free_statement($stid);
-
-    //Update user's reputation
-    $sql = "UPDATE REGISTERED_USER SET REPUTATION = REPUTATION + 1 WHERE username = '$postUsername'";
-	$stid = oci_parse($dbh, $sql);
-        oci_execute($stid);
-        oci_free_statement($stid);
-	}
-	    header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php");
+          //sql changes Vote Post table
+        	$stid = oci_parse($dbh, $sql);
+          oci_execute($stid);
+          oci_free_statement($stid);
+          //sql2 updates Post_WritePost table
+        	$stid = oci_parse($dbh, $sq2);
+          oci_execute($stid);
+          oci_free_statement($stid);
+          //sql3 updates user's reputation
+        	$stid = oci_parse($dbh, $sql3);
+          oci_execute($stid);
+          oci_free_statement($stid);
+        	
+	     header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php");
         exit();
- } 
+}
+
 elseif($_POST['DownVote']) 
 { 
+  $postTitle = $_POST['post_title'];
+  $postTime = $_POST['post_time'];
+  $postUsername = $_POST['post_username'];
 
+  //check if user has voted before
+  $sql = "SELECT Voted FROM VOTE_POST WHERE post_username = '$postUsername' AND post_time = '$postTime' AND post_title = '$postTitle'
+    AND voter_username = '".$_SESSION['myusername']."'";
+  $stid = oci_parse($dbh, $sql);
+  oci_execute($stid);
+  $row = oci_fetch_array($stid,OCI_DEFAULT);
+  oci_free_statement($stid);
+        //Post has not been voted previously
+        if ($row[0] == null){
+          //Insert entry into Vote Post
+          $sql = "INSERT INTO VOTE_POST(post_title, post_time, post_username, voter_username, Voted) VALUES ('$postTitle','$postTime', 
+            '$postUsername','".$_SESSION['myusername']."', '-1')";
+          //Update total number of votes that the Post has
+          $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES - 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+                  AND post_username = '$postUsername'";
+          //Update the reputation of the user who wrote the post        
+          $sql3= "UPDATE REGISTERED_USER SET REPUTATION = REPUTATION - 1 WHERE username = '$postUsername'";
+          }
+
+        //Post has been upvoted/downvoted and unvoted by user previously 
+        if($row[0] == 0){
+          //Update entry in Vote Post
+          $sql = "UPDATE VOTE_POST SET Voted = -1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          //Update total number of votes that the Post has
+          $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES - 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+                  AND post_username = '$postUsername'";
+          //Update the reputation of the user who wrote the post        
+          $sql3= "UPDATE REGISTERED_USER SET REPUTATION = REPUTATION - 1 WHERE username = '$postUsername'";
+          }
+
+        //Post was already downvoted by the user
+        //User is unvoting his downvote  
+        if($row[0] == -1){
+          //Update entry into Vote Post
+          $sql = "UPDATE VOTE_POST SET Voted = 0 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          //Update total number of votes that the Post has
+          $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES + 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+                  AND post_username = '$postUsername'";
+          //Update the reputation of the user who wrote the post
+          $sql3= "UPDATE REGISTERED_USER SET REPUTATION = REPUTATION + 1 WHERE username = '$postUsername'";                  
+        }
+        //Post was already upvoted by the user
+        //User is changing his upvote to a downvote
+        if($row[0] == 1){
+          //Update entry into Vote Post
+          $sql = "UPDATE VOTE_POST SET Voted = -1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          //Update total number of votes that the Post has
+          $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES - 2 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
+                  AND post_username = '$postUsername'";
+          //Update the reputation of the user who wrote the post
+          $sql3= "UPDATE REGISTERED_USER SET REPUTATION = REPUTATION - 2 WHERE username = '$postUsername'";                  
+        }    
+
+          //sql changes Vote Post table
+          $stid = oci_parse($dbh, $sql);
+          oci_execute($stid);
+          oci_free_statement($stid);
+          //sql2 updates Post_WritePost table
+          $stid = oci_parse($dbh, $sq2);
+          oci_execute($stid);
+          oci_free_statement($stid);
+          //sql3 updates user's reputation
+          $stid = oci_parse($dbh, $sql3);
+          oci_execute($stid);
+          oci_free_statement($stid);
+          
+       header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php");
+        exit();
 } 
 
-elseif($_POST['Edit']) 
-{
-
-}
 elseif($_POST['Delete']) 
 {
 	
