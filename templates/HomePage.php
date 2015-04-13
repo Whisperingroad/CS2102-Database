@@ -34,10 +34,10 @@ if($_POST['UpVote'])
           }
 
         //Post has been upvoted/downvoted and unvoted by user previously 
-        if($row[0] == 0){
+        elseif($row[0] == 0){
           //Update entry in Vote Post
           $sql = "UPDATE VOTE_POST SET Voted = 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
-          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."'";
           //Update total number of votes that the Post has
           $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES + 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
                   AND post_username = '$postUsername'";
@@ -47,10 +47,10 @@ if($_POST['UpVote'])
 
         //Post was already upvoted by the user
         //User is unvoting his upvote  
-        if($row[0] == 1){
+        elseif($row[0] == 1){
           //Update entry into Vote Post
           $sql = "UPDATE VOTE_POST SET Voted = 0 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
-          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."'";
           //Update total number of votes that the Post has
           $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES - 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
                   AND post_username = '$postUsername'";
@@ -59,10 +59,10 @@ if($_POST['UpVote'])
         }
         //Post was already downvoted by the user
         //User is changing his downvote to an upvote
-        if($row[0] == -1){
+        elseif($row[0] == -1){
           //Update entry into Vote Post
           $sql = "UPDATE VOTE_POST SET Voted = 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
-          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."'";
           //Update total number of votes that the Post has
           $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES + 2 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
                   AND post_username = '$postUsername'";
@@ -75,7 +75,7 @@ if($_POST['UpVote'])
           oci_execute($stid);
           oci_free_statement($stid);
           //sql2 updates Post_WritePost table
-        	$stid = oci_parse($dbh, $sq2);
+        	$stid = oci_parse($dbh, $sql2);
           oci_execute($stid);
           oci_free_statement($stid);
           //sql3 updates user's reputation
@@ -85,8 +85,8 @@ if($_POST['UpVote'])
         	
 	     header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php");
         exit();
-}
 
+ } 
 elseif($_POST['DownVote']) 
 { 
   $postTitle = $_POST['post_title'];
@@ -113,10 +113,10 @@ elseif($_POST['DownVote'])
           }
 
         //Post has been upvoted/downvoted and unvoted by user previously 
-        if($row[0] == 0){
+        elseif($row[0] == 0){
           //Update entry in Vote Post
           $sql = "UPDATE VOTE_POST SET Voted = -1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
-          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."'";
           //Update total number of votes that the Post has
           $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES - 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
                   AND post_username = '$postUsername'";
@@ -126,10 +126,10 @@ elseif($_POST['DownVote'])
 
         //Post was already downvoted by the user
         //User is unvoting his downvote  
-        if($row[0] == -1){
+        elseif($row[0] == -1){
           //Update entry into Vote Post
           $sql = "UPDATE VOTE_POST SET Voted = 0 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
-          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."'";
           //Update total number of votes that the Post has
           $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES + 1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
                   AND post_username = '$postUsername'";
@@ -138,10 +138,10 @@ elseif($_POST['DownVote'])
         }
         //Post was already upvoted by the user
         //User is changing his upvote to a downvote
-        if($row[0] == 1){
+        elseif($row[0] == 1){
           //Update entry into Vote Post
           $sql = "UPDATE VOTE_POST SET Voted = -1 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
-          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."')";
+          AND post_username = '$postUsername' AND voter_username = '".$_SESSION['myusername']."'";
           //Update total number of votes that the Post has
           $sql2 = "UPDATE POST_WRITEPOST SET PVOTES = PVOTES - 2 WHERE post_title = '$postTitle' AND post_time = '$postTime' 
                   AND post_username = '$postUsername'";
@@ -154,7 +154,7 @@ elseif($_POST['DownVote'])
           oci_execute($stid);
           oci_free_statement($stid);
           //sql2 updates Post_WritePost table
-          $stid = oci_parse($dbh, $sq2);
+          $stid = oci_parse($dbh, $sql2);
           oci_execute($stid);
           oci_free_statement($stid);
           //sql3 updates user's reputation
@@ -164,11 +164,25 @@ elseif($_POST['DownVote'])
           
        header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php");
         exit();
+
 } 
 
 elseif($_POST['Delete']) 
 {
-	
+	$postTitle = $_POST['post_title'];
+	$postTime = $_POST['post_time'];
+	$postUsername = $_POST['post_username'];
+
+	//delete the post that the user wants to remove
+	$sql = "DELETE from POST_WRITEPOST where post_title = '$postTitle' AND post_time = '$postTime' 
+    AND post_username = '$postUsername'";
+    $stid = oci_parse($dbh, $sql);
+    oci_execute($stid);
+    oci_free_statement($stid);
+
+    header("Location: http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php");
+    exit();
+
 }
 ?>
 
@@ -190,7 +204,7 @@ elseif($_POST['Delete'])
     <div class = "navbar">
     <!-- ordered list within unordered list -->
       <ul class = "navigation">
-          <li> <a href= "#HotPost"> Hot Posts </a> </li>
+          <li> <a href= "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php"> Hot Posts </a> </li>
           <li> <a href= "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/NewPostsAccToTime.php"> New Posts </a> </li>
           <li> <a href = "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/Profile.php"> Profile </a> </li>
           <li> <a href = "http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/Post.php" > Create a new post! </a> </li>
@@ -214,14 +228,14 @@ elseif($_POST['Delete'])
           // <button id = " . "button class=". "pure-button pure-button-active".">Delete</button></li>";
 
         //get user's reputation
-		$sql = "SELECT reputation FROM REGISTERED_USER WHERE username = '$postUsername'";
+		$sql = "SELECT reputation FROM REGISTERED_USER WHERE username = '". $hotPost['POST_USERNAME']."'";
 		$stid = oci_parse($dbh, $sql);
         oci_execute($stid);
-        $row = oci_fetch_array($stid,OCI_DEFAULT);
+        $row1 = oci_fetch_array($stid,OCI_DEFAULT);
         oci_free_statement($stid);
 
          echo '<li id ="post_content">'.$hotPost['POST_CONTENT']. '</li>';
-         echo '<li id ="post_username">'. $hotPost['POST_USERNAME'].' '.$row[0].' Points</li>';
+         echo '<li id ="post_username">'. $hotPost['POST_USERNAME'].' '.$row1[0].' Points</li>';
          echo "<li id =". "post_time>". $hotPost['POST_TIME']. "  ". $hotPost['PVOTES']." Vote(s)</li>";         
          
 
@@ -249,10 +263,16 @@ elseif($_POST['Delete'])
          <td><input type="submit" name ="DownVote" value="DownVote"></form></td>';
          }
 
+        $sql = "SELECT isAdmin FROM REGISTERED_USER WHERE username = '".$_SESSION['myusername']."'";
+		$stid = oci_parse($dbh, $sql);
+        oci_execute($stid);
+        $row1 = oci_fetch_array($stid,OCI_DEFAULT);
+        oci_free_statement($stid); 
+
          //edit or delete if you are post author or admin
-         if ( $_SESSION['myusername'] == $hotPost['POST_USERNAME']){ 
+         if ( $_SESSION['myusername'] == $hotPost['POST_USERNAME'] || $row1[0] == 'Y'){ 
          //Edit button
-         echo '<form method="post"action="http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/templates/HomePage.php">
+         echo '<form method="post"action="http://cs2102-i.comp.nus.edu.sg/~a0101856/cs2102/scripts/Edit.php">
 		 <input type="hidden" name="post_title" value= "'.$hotPost['POST_TITLE'].'">
 		 <input type="hidden" name="post_time" value="'.$hotPost['POST_TIME'].'">
 		 <input type="hidden" name="post_username" value="'.$hotPost['POST_USERNAME'].'">
