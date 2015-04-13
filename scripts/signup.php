@@ -103,6 +103,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($row > 0){
             $duplicatedEmailErr = "This email address is taken!";   
         }
+        else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $emailErr = "Invalid email format!";
+        }
         else{
             $valid_email = 1;   
         }
